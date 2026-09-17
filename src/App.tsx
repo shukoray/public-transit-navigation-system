@@ -10,8 +10,32 @@ function App() {
 
     const map = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://demotiles.maplibre.org/globe.json',
-      center: [-79.3832, 43.6532],
+      
+      style: {
+        version: 8,
+
+        sources: {
+          osm: {
+            type: 'raster',
+            tiles: [
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+            ],
+            tileSize: 256,
+            attribution: '© OpenStreetMap contributors',
+            maxzoom: 19,
+          },
+        },
+
+        layers: [
+          {
+            id: 'osm',
+            type: 'raster',
+            source: 'osm',
+          },
+        ],
+      },
+
+      center: [-79.3832, 43.6532], // Toronto
       zoom: 11,
     })
 
