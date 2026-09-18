@@ -1,3 +1,4 @@
+import './App.css'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useRef } from 'react'
 import * as maplibregl from 'maplibre-gl'
@@ -29,13 +30,15 @@ function App() {
         <br /><br />
       </p>
 
-      <div
-        ref={mapContainer}
-        style={{
-          width: '100%',
-          height: '500px',
-        }}
-      />
+      <div className="map-container">
+        <div
+          ref={mapContainer}
+          style={{
+            width: '100%',
+            height: '500px',
+          }}
+        />
+      </div>
     </div>
   )
 }
