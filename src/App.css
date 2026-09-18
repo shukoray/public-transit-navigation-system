@@ -194,6 +194,6 @@
 
 .map-container {
   width: 90%;
-  max-width: 1200px;
+  aspect-ratio: 16 / 10;
   margin: 0 auto;
 }
