@@ -198,3 +198,9 @@
   aspect-ratio: 16 / 10;
   margin: 0 auto;
 }
+
+.location-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
