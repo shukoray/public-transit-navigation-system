@@ -33,11 +33,12 @@ function App() {
           osm: {
             type: 'raster',
             tiles: [
-              'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+              'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png'
             ],
             tileSize: 256,
-            attribution: '© OpenStreetMap contributors',
-            maxzoom: 19,
+            attribution:
+              '© Stadia Maps © OpenMapTiles © OpenStreetMap',
+            maxzoom: 20,
           },
         },
 
