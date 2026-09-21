@@ -109,18 +109,6 @@ This project is currently under active development.
 
 The application structure, features, and transportation data pipeline are subject to change as development progresses. The repository contains the current working version of the application, with additional routing functionality, transportation models, and data processing components planned for future development.
 
-## Educational Objectives
-
-This project serves as an exploration of:
-
-- Graph algorithms
-- Route optimisation
-- Public transportation systems
-- Dynamic pathfinding
-- Traffic simulation
-- Geographic Information Systems (GIS)
-- Ride-sharing optimisation
-
 ## Project Status
 
 🚧 In Development
