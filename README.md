@@ -16,7 +16,6 @@ A smart navigation system for public transportation that utilizes real-world map
 ```bash
 npm install
 npm run dev
-npm install maplibre-gl
 ```
 
 ## Production build
