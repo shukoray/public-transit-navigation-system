@@ -7,6 +7,9 @@ A smart navigation system for public transportation that utilizes real-world map
 - React
 - TypeScript
 - Vite
+- MapLibre GL JS
+- OpenStreetMap
+- Stadia Maps
 
 ## Getting started
 
