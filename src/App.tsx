@@ -184,8 +184,8 @@ function App() {
       </div>
       <br />
 
-      // Display the selected start and end points
       <div>
+        Location information
         <p>
           Start: {startPoint
             ? `${startPoint[1].toFixed(5)}, ${startPoint[0].toFixed(5)}`
