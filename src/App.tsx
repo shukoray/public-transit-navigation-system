@@ -6,7 +6,13 @@ import * as maplibregl from 'maplibre-gl'
 function App() {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map | null>(null);
+  const startMarker = useRef<maplibregl.Marker | null>(null)
+  const endMarker = useRef<maplibregl.Marker | null>(null)
+  const startPointRef = useRef<[number, number] | null>(null)
+  const endPointRef = useRef<[number, number] | null>(null)
   const [city, setCity] = useState("Toronto");
+  const [startPoint, setStartPoint] = useState<[number, number] | null>(null)
+  const [endPoint, setEndPoint] = useState<[number, number] | null>(null)
   const cityLocations: Record<string, [number, number]> = {
     "Toronto": [-79.3832, 43.6532],
     "New York": [-74.0060, 40.7128],
@@ -55,19 +61,105 @@ function App() {
       zoom: 11,
     })
 
-    return () => { 
-      map.current?.remove() 
-      map.current = null 
-    } 
+    const handleMapClick = (e: maplibregl.MapMouseEvent) => {
+      const point: [number, number] = [
+        e.lngLat.lng,
+        e.lngLat.lat
+      ]
+
+      //if no start, set start
+      if (startPointRef.current === null) {
+        setStartPoint(point)
+      }
+
+      //if start exists but no end, set End
+      else if (endPointRef.current === null) {
+        setEndPoint(point)
+      }
+
+      // Both exist → do nothing
+    }
+
+    map.current.on('click', handleMapClick)
+
+    return () => {
+      map.current?.off('click', handleMapClick)
+      map.current?.remove()
+      map.current = null
+    }
   }, [])
+
+  // Keep the refs synchronized with React state
+  useEffect(() => {
+    startPointRef.current = startPoint
+  }, [startPoint])
+
+  useEffect(() => {
+    endPointRef.current = endPoint
+  }, [endPoint])
+
+  // Create / remove start marker
+  useEffect(() => {
+    if (!map.current) return
+    startMarker.current?.remove()
+    startMarker.current = null
+    if (startPoint) {
+      const markerElement = document.createElement('div') //Use JavaScript to create a HTML element for the marker
+      markerElement.textContent = '📍'
+      markerElement.style.fontSize = '30px'
+      markerElement.style.cursor = 'pointer'
+
+      markerElement.addEventListener('click', (event) => {
+        event.stopPropagation() //The click event stops here, it do not propagate further to the outer layer such as map.
+        setStartPoint(null)
+      })
+
+      startMarker.current = new maplibregl.Marker({
+        element: markerElement
+      })
+        .setLngLat(startPoint)
+        .addTo(map.current)
+    }
+  }, [startPoint])
+
+  // Create / remove end marker
+  useEffect(() => {
+    if (!map.current) return
+    endMarker.current?.remove()
+    endMarker.current = null
+    if (endPoint) {
+      const markerElement = document.createElement('div')
+      markerElement.textContent = '🏁'
+      markerElement.style.fontSize = '30px'
+      markerElement.style.cursor = 'pointer'
+
+      markerElement.addEventListener('click', (event) => {
+        event.stopPropagation()
+        setEndPoint(null)
+      })
+
+      endMarker.current = new maplibregl.Marker({
+        element: markerElement
+      })
+        .setLngLat(endPoint)
+        .addTo(map.current)
+    }
+  }, [endPoint])
 
   const handleCityChange = (newCity: string) => {
     setCity(newCity) 
+    setStartPoint(null)
+    setEndPoint(null)
     const location = cityLocations[newCity] 
     map.current?.flyTo({ 
       center: location, 
       zoom: 11, 
     }) 
+  }
+
+  const resetPoints = () => {
+    setStartPoint(null)
+    setEndPoint(null)
   }
 
   return (
@@ -89,6 +181,26 @@ function App() {
             height: '100%',
           }}
         />
+      </div>
+      <br />
+
+      <div>
+        Location information
+        <p>
+          Start: {startPoint
+            ? `${startPoint[1].toFixed(5)}, ${startPoint[0].toFixed(5)}`
+            : 'Not selected'}
+        </p>
+
+        <p>
+          End: {endPoint
+            ? `${endPoint[1].toFixed(5)}, ${endPoint[0].toFixed(5)}`
+            : 'Not selected'}
+        </p>
+
+        <button onClick={resetPoints}>
+          Reset
+        </button>
       </div>
 
       <br /><br />
@@ -112,6 +224,8 @@ function App() {
           <option value="Vancouver">Vancouver</option>
         </select>
       </div>
+
+      <br /><br />
     </div>
   )
 }
