@@ -90,19 +90,6 @@ Map tiles are provided by Stadia Maps using OpenMapTiles and OpenStreetMap data.
 © OpenMapTiles  
 © OpenStreetMap
 
-## Background Image Attribution
-
-The website background image is a photograph by Patrick McManaman and is used via Unsplash.
-
-Photo:
-https://unsplash.com/photos/spiral-gray-and-black-digital-wallpaper-LN_g3qA8ohg
-
-Photographer:
-Patrick McManaman
-
-Platform:
-Unsplash
-
 ## Development Status
 
 This project is currently under active development.
