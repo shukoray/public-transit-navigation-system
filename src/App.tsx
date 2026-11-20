@@ -175,7 +175,7 @@ function App() {
       </div>
 
       <h1 className="map-title" onClick={() => window.location.reload()}>
-        Public Transit Navigation System
+        Public Navigation System
       </h1>
 
       <div className="location-information">
